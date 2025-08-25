@@ -66,6 +66,7 @@ const ThemeToggle = () => {
   };
 
   const getCurrentDisplayTheme = (): Theme => {
+    if (!mounted) return 'light';
     if (theme === 'system') {
       return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
     }
@@ -74,7 +75,7 @@ const ThemeToggle = () => {
 
   if (!mounted) {
     return (
-      <div className="w-9 h-9 rounded-lg bg-gray-100 dark:bg-gray-800 animate-pulse" />
+      <div className="w-9 h-9 rounded-lg bg-slate-100 dark:bg-slate-800 animate-pulse" />
     );
   }
 
@@ -85,7 +86,7 @@ const ThemeToggle = () => {
         className="w-9 h-9 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 flex items-center justify-center transition-colors duration-200 text-slate-700 dark:text-slate-300"
         aria-label="Toggle theme"
       >
-        {getThemeIcon(theme === 'system' ? getCurrentDisplayTheme() : theme)}
+        {getThemeIcon(getCurrentDisplayTheme())}
       </button>
 
       {isOpen && (
@@ -100,13 +101,9 @@ const ThemeToggle = () => {
           <div className="absolute right-0 top-full mt-2 w-32 bg-white dark:bg-slate-800 rounded-lg shadow-lg border border-slate-200 dark:border-slate-600 py-1 z-20">
             {/* Current theme at top */}
             <div className="px-3 py-2 bg-slate-50 dark:bg-slate-700/50 border-b border-slate-200 dark:border-slate-600">
-              <button
-                onClick={() => handleThemeChange(theme)}
-                className="w-full flex items-center gap-3 text-left text-sm font-medium text-slate-900 dark:text-slate-100"
-              >
+              <div className="flex items-center gap-3 text-sm font-medium text-slate-900 dark:text-slate-100">
                 {getThemeIcon(theme)}
-                <span className="capitalize">{theme}</span>
-              </button>
+              </div>
             </div>
             
             {/* Other theme options */}
@@ -120,7 +117,6 @@ const ThemeToggle = () => {
                     className="w-full flex items-center gap-3 px-3 py-2 text-left text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors duration-150"
                   >
                     {getThemeIcon(themeOption)}
-                    <span className="capitalize">{themeOption}</span>
                   </button>
                 ))}
             </div>
