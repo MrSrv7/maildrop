@@ -24,15 +24,12 @@ const ThemeToggle = () => {
     if (!mounted) return;
 
     const html = document.documentElement;
-    const body = document.body;
     
     if (theme === 'system') {
       const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
       html.classList.toggle('dark', systemTheme === 'dark');
-      body.classList.toggle('dark', systemTheme === 'dark');
     } else {
       html.classList.toggle('dark', theme === 'dark');
-      body.classList.toggle('dark', theme === 'dark');
     }
     
     localStorage.setItem('theme', theme);
@@ -45,9 +42,7 @@ const ThemeToggle = () => {
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     const handleChange = () => {
       const html = document.documentElement;
-      const body = document.body;
       html.classList.toggle('dark', mediaQuery.matches);
-      body.classList.toggle('dark', mediaQuery.matches);
     };
 
     mediaQuery.addEventListener('change', handleChange);
