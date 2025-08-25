@@ -23,13 +23,16 @@ const ThemeToggle = () => {
   useEffect(() => {
     if (!mounted) return;
 
-    const root = document.documentElement;
+    const html = document.documentElement;
+    const body = document.body;
     
     if (theme === 'system') {
       const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-      root.classList.toggle('dark', systemTheme === 'dark');
+      html.classList.toggle('dark', systemTheme === 'dark');
+      body.classList.toggle('dark', systemTheme === 'dark');
     } else {
-      root.classList.toggle('dark', theme === 'dark');
+      html.classList.toggle('dark', theme === 'dark');
+      body.classList.toggle('dark', theme === 'dark');
     }
     
     localStorage.setItem('theme', theme);
@@ -41,8 +44,10 @@ const ThemeToggle = () => {
 
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     const handleChange = () => {
-      const root = document.documentElement;
-      root.classList.toggle('dark', mediaQuery.matches);
+      const html = document.documentElement;
+      const body = document.body;
+      html.classList.toggle('dark', mediaQuery.matches);
+      body.classList.toggle('dark', mediaQuery.matches);
     };
 
     mediaQuery.addEventListener('change', handleChange);
@@ -97,9 +102,9 @@ const ThemeToggle = () => {
           />
           
           {/* Menu */}
-          <div className="absolute right-0 top-full mt-2 w-32 bg-white dark:bg-slate-800 rounded-lg shadow-lg border border-slate-200 dark:border-slate-700 py-1 z-20">
+          <div className="absolute right-0 top-full mt-2 w-32 bg-white dark:bg-slate-800 rounded-lg shadow-lg border border-slate-200 dark:border-slate-600 py-1 z-20">
             {/* Current theme at top */}
-            <div className="px-3 py-2 bg-slate-50 dark:bg-slate-700 border-b border-slate-200 dark:border-slate-600">
+            <div className="px-3 py-2 bg-slate-50 dark:bg-slate-700/50 border-b border-slate-200 dark:border-slate-600">
               <button
                 onClick={() => handleThemeChange(theme)}
                 className="w-full flex items-center gap-3 text-left text-sm font-medium text-slate-900 dark:text-slate-100"
@@ -117,7 +122,7 @@ const ThemeToggle = () => {
                   <button
                     key={themeOption}
                     onClick={() => handleThemeChange(themeOption)}
-                    className="w-full flex items-center gap-3 px-3 py-2 text-left text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors duration-150"
+                    className="w-full flex items-center gap-3 px-3 py-2 text-left text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors duration-150"
                   >
                     {getThemeIcon(themeOption)}
                     <span className="capitalize">{themeOption}</span>
